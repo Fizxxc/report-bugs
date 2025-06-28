@@ -82,10 +82,24 @@
   <!-- JavaScript -->
   <script>
     // Menampilkan waktu sekarang
-    const datetime = new Date();
-    document.getElementById('datetime').textContent = 
-      datetime.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) 
-      + ' | ' + datetime.toLocaleTimeString('id-ID');
+  function updateTime() {
+    const now = new Date();
+    const tanggal = now.toLocaleDateString('id-ID', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+
+    const waktu = now.toLocaleTimeString('id-ID');
+    document.getElementById('datetime').textContent = `${tanggal} | ${waktu}`;
+  }
+
+  // Panggil pertama kali saat halaman dimuat
+  updateTime();
+
+  // Update setiap 1 detik
+  setInterval(updateTime, 1000);
 
     // Berita contoh
     const berita = [
