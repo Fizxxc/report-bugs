@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Report Bug - DigiCraft</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 400px;
+}
+
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  resize: none;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+  </style>
+<body>
+  <div class="container">
+    <h2>Laporkan Bug</h2>
+    <textarea id="bugReport" placeholder="Jelaskan bug yang Anda temui..."></textarea>
+    <button onclick="kirimLaporan()">Kirim Laporan</button>
+  </div>
+
+  <script>
+    function kirimLaporan() {
+  const laporan = document.getElementById('bugReport').value.trim();
+
+  if (!laporan) {
+    Swal.fire('Ups!', 'Silakan isi laporan bug terlebih dahulu.', 'warning');
+    return;
+  }
+
+  // Ganti dengan TOKEN dan chat_id kamu
+  const TOKEN = '6439522031:AAGphEnYCdsDVZQYt-a6mMZmV0zqZ2g6RC8';
+  const CHAT_ID = '6450551010';
+  const url = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+
+  const pesan = `🪲 *Laporan Bug Baru*:\n\n${laporan}`;
+
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: pesan,
+      parse_mode: 'Markdown'
+    })
+  })
+  .then(res => {
+    if (res.ok) {
+      Swal.fire('Berhasil!', 'Laporan bug berhasil dikirim!', 'success');
+      document.getElementById('bugReport').value = '';
+    } else {
+      Swal.fire('Gagal!', 'Laporan gagal dikirim. Coba lagi nanti.', 'error');
+    }
+  })
+  .catch(() => {
+    Swal.fire('Error!', 'Terjadi kesalahan jaringan.', 'error');
+  });
+}
+
+  </script>
+</body>
+</html>
